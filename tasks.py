@@ -2,7 +2,7 @@ from robocorp.tasks import task
 from robocorp import browser
 
 from RPA.HTTP import HTTP
-from RPA.Browser.Selenium import Selenium
+from RPA.Browser.Selenium import Selenium   # Since you are not using the selenium library, you can remove this import
 from RPA.Tables import Tables
 from RPA.PDF import PDF
 from RPA.Archive import Archive
@@ -16,7 +16,7 @@ def order_robots_from_RobotSpareBin():
     Embeds the screenshot of the robot to the PDF receipt.
     Creates ZIP archive of the receipts and the images.
     """
-    browser.configure(slowmo=100,)
+    browser.configure(slowmo=100,)  # With the final commit, you can remove the slowmo parameter since we want it to run as fast as possible
     open_robot_order_website()
     close_annoying_modal()
     get_orders()
@@ -69,7 +69,7 @@ def fill_the_form(order):
     """
     page = browser.page()
     page.select_option ("#head", order['Head'])
-    page.click('//*[@id="root"]/div/div[1]/div/div[1]/form/div[2]/div/div[{0}]/label'.format(order['Body']))
+    page.click('//*[@id="root"]/div/div[1]/div/div[1]/form/div[2]/div/div[{0}]/label'.format(order['Body'])) # A more direct locator string could have been f'//input[@id="id-body-{order["Body"]}"]'. We use f-strings to format strings in Python for readability. The part number is in the id for the html so concatenating it together would be better.
     page.fill ("input[type='number']", order['Legs'])
     page.fill ("#address", order['Address'])
     page.click("#preview")    
@@ -80,7 +80,7 @@ def store_receipt_as_pdf(order_number):
     """
     page = browser.page()
     pdf = PDF()
-    pdf_file = "output/receipts/{0}.pdf".format(order_number)
+    pdf_file = "output/receipts/{0}.pdf".format(order_number) # Use f-strings for string formatting
     receipt_info = page.locator("#receipt").inner_html()
     pdf.html_to_pdf(receipt_info, pdf_file)
     return pdf_file        
@@ -90,7 +90,7 @@ def screenshot_robot(order_number):
     Takes a screenshot of the page.
     """
     page = browser.page()
-    screenshot_path = "output/screenshots/{0}.png".format(order_number)
+    screenshot_path = "output/screenshots/{0}.png".format(order_number) # Use f-strings for string formatting
     page.locator("#robot-preview-image").screenshot(path = screenshot_path)
     return screenshot_path
 
