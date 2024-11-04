@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "c:/Users/WesleyHartman/Documents/APD Repos/Staff Training Courses/APDTraining-Level2/."
+    ],
+    "python.terminal.activateEnvironment": false
+}
